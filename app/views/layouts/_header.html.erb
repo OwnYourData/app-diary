@@ -1,0 +1,47 @@
+<header class="navbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-xs-2">
+                <% if session[:desktop] == "1" %>
+                    <div class="logo-txt" style="margin-top: -8px;">
+                        <a href="<%= @pia_url || '#' %>" class="font-size-large" style="margin-right: -20px; text-decoration: none; color: #666666;">
+                            <i class="fa fa-arrow-left"></i>
+                        </a>
+                    </div>
+                <% else %>
+                    <div class="oyd-logo"></div>
+                <% end %>
+            </div>
+            <div class="col-xs-8">
+                <% if session[:desktop] == "1" %>
+                    <h1 style="text-align: center; margin-top: 7px;"><%= t('general.title') %></h1>
+                <% end %>
+            </div>
+            <div class="col-xs-2">
+                <ul style="float:right; white-space: nowrap;">
+                    <div class="btn-group dropdown" style="margin-top:15px;">
+                        <a href="#" class="dropdown-toggle fakelink" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-plus"  style="font-size:25px;"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <li><%= link_to t('general.mood'), "#", data: { toggle: "modal", target: "#moodModal"} %></li>
+                            <li><%= link_to t('general.note'), '#', data: { toggle: "modal", target: "#textModal"} %></li>
+                        </ul>
+                    </div>
+                    <div class="btn-group dropdown" style="margin-top:15px;">
+                        <a href="#" class="dropdown-toggle fakelink" data-toggle="dropdown">
+                            <span class="glyphicon glyphicon-cog"  style="font-size:25px;"></span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-right">
+                            <% if params[:operation].to_s == 'edit' %>
+                                <li><%= link_to t('general.stop_edit'), { operation: nil } %></li>
+                            <% else %>
+                                <li><%= link_to t('general.edit'), { operation: 'edit' } %></li>
+                            <% end %>
+                        </ul>
+                    </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+</header>

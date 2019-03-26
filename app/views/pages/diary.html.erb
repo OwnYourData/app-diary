@@ -1,0 +1,169 @@
+<% provide(:title, t('general.title')) %>
+
+<div class="day_separator">
+	<div class="container">
+		<span class="separator_title"><%= t('general.today') %></span>
+	</div>
+</div>
+<div class="container">
+	<div class="item_img_select">
+		<div id="today_mood_1" class="<%= @today_mood == 1 ? 'img_selected' : 'img_select' %>">
+			<%= link_to set_mood_path(mood: 1, day: 0, id: @today_mood_id, old: @today_mood) do 
+				%><%= image_tag 'mood1.png', class: "mood" %><% end %>
+		</div>
+		<div id="today_mood_2" class="<%= @today_mood == 2 ? 'img_selected' : 'img_select' %>">
+			<%= link_to set_mood_path(mood: 2, day: 0, id: @today_mood_id, old: @today_mood) do 
+				%><%= image_tag 'mood2.png', class: "mood" %><% end %>
+		</div>
+		<div id="today_mood_3" class="<%= @today_mood == 3 ? 'img_selected' : 'img_select' %>">
+			<%= link_to set_mood_path(mood: 3, day: 0, id: @today_mood_id, old: @today_mood) do 
+				%><%= image_tag 'mood3.png', class: "mood" %><% end %>
+		</div>
+		<div id="today_mood_4" class="<%= @today_mood == 4 ? 'img_selected' : 'img_select' %>">
+			<%= link_to set_mood_path(mood: 4, day: 0, id: @today_mood_id, old: @today_mood) do 
+				%><%= image_tag 'mood4.png', class: "mood" %><% end %>
+		</div>
+		<div  id="today_mood_5" class="<%= @today_mood == 5 ? 'img_selected' : 'img_select' %>">
+			<%= link_to set_mood_path(mood: 5, day: 0, id: @today_mood_id, old: @today_mood) do 
+				%><%= image_tag 'mood5.png', class: "mood" %><% end %>
+		</div>
+	</div>
+	<% if @today_text.to_s == "" %>
+		<div class="item_text_placeholder">
+				<span id="placeholder_text" onclick="(function(){ document.getElementById('placeholder_text').style.display='none'; document.getElementById('text_today').style.display='block'; return false; })();return false;">click here to enter text</span>
+			<%= form_with url: set_text_path, id: "text_today", role: "form", html: {style: "display:none;"} do |form| %>
+				<%= form.hidden_field :orig_id, value: nil %>
+				<%= form.text_area :text, rows: 4, style: 'width:100%; color:black;', autofocus: true %><br>
+				<button onclick="(function(){ document.getElementById('placeholder_text').style.display='block'; document.getElementById('text_today').style.display='none'; return false; })();return false;" style="float:left; font-size:16px;" class="btn btn-default"><%= t('general.cancel') %></button>
+				<%= form.button t('general.save'), style: "float:right; font-size:16px;", class:"btn btn-success" %>
+			<% end %>
+		</div>
+	<% else %>
+		<div class="item_text">
+			<span id="placeholder_text" onclick="(function(){ document.getElementById('placeholder_text').style.display='none'; document.getElementById('text_today').style.display='block'; return false; })();return false;"><%= @today_text.to_s %></span>
+			<%= form_with url: set_text_path, id: "text_today", role: "form", html: {style: "display:none;"} do |form| %>
+				<%= form.hidden_field :orig_id, value: @today_text_id %>
+				<%= form.text_area :text, value: @today_text.to_s, rows: 4, style: 'width:100%; color:black;', autofocus: true %><br>
+				<button onclick="(function(){ document.getElementById('placeholder_text').style.display='block'; document.getElementById('text_today').style.display='none'; return false; })();return false;" style="float:left; font-size:16px;" class="btn btn-default"><%= t('general.cancel') %></button>
+				<%= form.button t('general.save'), style: "float:right; font-size:16px;", class:"btn btn-success" %>
+			<% end %>
+		</div>
+	<% end %>
+</div>
+
+<%= render partial: "days", collection: @all_items.sort_by { |item| item[0].to_s.to_date }.reverse %>
+
+<!-- Mood Modal -->
+<div class="modal fade" id="moodModal" tabindex="-1" role="dialog" aria-labelledby="detailsHeader">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="detailsHeader"><%= t('dialog.newEntry') %> "<%= t('general.mood') %>"</h4>
+			</div>
+			<%= form_with url: new_mood_path do |form| %>
+				<div class="modal-body">
+					<label for="mood_date"><%= t('dialog.dateLbl') %>:</label>
+					<div class="input-group date">
+						<%= form.text_field :mood_date, id: "mood_date", class: "form-control" %><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+					</div>
+					<%= form.hidden_field :mood_value, id: "mood_value" %>
+					<div class="row" style="margin:25px 0 0;">
+						<div class="item_img_select">
+							<div class="img_select" id="mood1" onclick="
+								document.getElementById('mood_value').value='1'; 
+								document.getElementById('mood1').className = 'img_selected'; 
+								document.getElementById('mood2').className = 'img_select'; 
+								document.getElementById('mood3').className = 'img_select'; 
+								document.getElementById('mood4').className = 'img_select'; 
+								document.getElementById('mood5').className = 'img_select';">
+								<%= image_tag 'mood1.png', class: "mood" %>
+							</div>
+							<div class="img_select" id="mood2" onclick="
+								document.getElementById('mood_value').value='2'; 
+								document.getElementById('mood1').className = 'img_select'; 
+								document.getElementById('mood2').className = 'img_selected'; 
+								document.getElementById('mood3').className = 'img_select'; 
+								document.getElementById('mood4').className = 'img_select'; 
+								document.getElementById('mood5').className = 'img_select';">
+								<%= image_tag 'mood2.png', class: "mood" %>
+							</div>
+							<div class="img_select" id="mood3" onclick="
+								document.getElementById('mood_value').value='3'; 
+								document.getElementById('mood1').className = 'img_select'; 
+								document.getElementById('mood2').className = 'img_select'; 
+								document.getElementById('mood3').className = 'img_selected'; 
+								document.getElementById('mood4').className = 'img_select'; 
+								document.getElementById('mood5').className = 'img_select';">
+								<%= image_tag 'mood3.png', class: "mood" %>
+							</div>
+							<div class="img_select" id="mood4" onclick="
+								document.getElementById('mood_value').value='4'; 
+								document.getElementById('mood1').className = 'img_select'; 
+								document.getElementById('mood2').className = 'img_select'; 
+								document.getElementById('mood3').className = 'img_select'; 
+								document.getElementById('mood4').className = 'img_selected'; 
+								document.getElementById('mood5').className = 'img_select';">
+								<%= image_tag 'mood4.png', class: "mood" %>
+							</div>
+							<div class="img_select" id="mood5" onclick="
+								document.getElementById('mood_value').value='5'; 
+								document.getElementById('mood1').className = 'img_select'; 
+								document.getElementById('mood2').className = 'img_select'; 
+								document.getElementById('mood3').className = 'img_select'; 
+								document.getElementById('mood4').className = 'img_select'; 
+								document.getElementById('mood5').className = 'img_selected';">
+								<%= image_tag 'mood5.png', class: "mood" %>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><%= t('general.cancel') %></button>
+					<%= form.button t('general.save'), 
+							class: "btn btn-primary", style: "width: 200px;",
+							data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> " + t('general.save') } %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<!-- Text Modal -->
+<div class="modal fade" id="textModal" tabindex="-1" role="dialog" aria-labelledby="detailsHeader">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="detailsHeader"><%= t('dialog.newEntry') %> "<%= t('general.note') %>"</h4>
+			</div>
+			<%= form_with url: new_text_path do |form| %>
+				<div class="modal-body">
+					<label for="text_date"><%= t('dialog.dateLbl') %>:</label>
+					<div class="input-group date">
+						<%= form.text_field :text_date, id: "mood_date", class: "form-control" %><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+					</div>
+					<p>&nbsp;</p>
+					<div class="input-group" style="width: 100%;">
+						<label for="new_text"><%= t('general.note') %>:</label>
+						<%= form.text_area :text_value, id: "new_text", rows: 4, style: 'width:100%; color:black;' %>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal"><%= t('general.cancel') %></button>
+					<%= form.button t('general.save'), 
+							class: "btn btn-primary", style: "width: 200px;",
+							data: { disable_with: "<i class='fa fa-spinner fa-spin'></i> " + t('general.save') } %>
+				</div>
+			<% end %>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$('.input-group.date').datepicker({
+    language: "<%= I18n.locale %>",
+    autoclose: true,
+    calendarWeeks: true
+});
+</script>

@@ -1,0 +1,48 @@
+<div class="day_separator">
+	<div class="container">
+		<span class="separator_title"><%= I18n.l(days[0].to_s.to_date, format: :long) %></span>
+	</div>
+</div>
+<div class="container">
+<% mood = days[1][:mood]
+	if !mood.nil? 
+		mood = mood.to_i %>
+		<div class="row" style="margin:0;">
+			<div class="item_img_select">
+				<% if params[:operation].to_s == 'edit' %>
+					<%= link_to delete_mood_path(id: days[1][:mood_id]), class: 'btn btn-danger', style: "float: left; margin: 10px 10px;"  do %>
+						<span class="glyphicon glyphicon-trash"></span>
+					<% end %>
+				<% end %>
+				<div class="<%= mood == 1 ? 'img_selected' : 'img_select_fix' %>">
+					<%= image_tag 'mood1.png', class: "mood" %>
+				</div>
+				<div class="<%= mood == 2 ? 'img_selected' : 'img_select_fix' %>">
+					<%= image_tag 'mood2.png', class: "mood" %>
+				</div>
+				<div class="<%= mood == 3 ? 'img_selected' : 'img_select_fix' %>">
+					<%= image_tag 'mood3.png', class: "mood" %>
+				</div>
+				<div class="<%= mood == 4 ? 'img_selected' : 'img_select_fix' %>">
+					<%= image_tag 'mood4.png', class: "mood" %>
+				</div>
+				<div class="<%= mood == 5 ? 'img_selected' : 'img_select_fix' %>">
+					<%= image_tag 'mood5.png', class: "mood" %>
+				</div>
+			</div>
+		</div>
+<%  end %>
+<% text = days[1][:text]
+	if !text.nil? %>
+		<div class="row" style="margin:0;">
+			<% if params[:operation].to_s == 'edit' %>
+				<%= link_to delete_text_path(id: days[1][:text_id]), class: 'btn btn-danger', style: "float: left; margin-left: 10px; margin-right: 10px;"  do %>
+					<span class="glyphicon glyphicon-trash"></span>
+				<% end %>
+			<% end %>
+			<div class="item_text">
+				<%= text.to_s %>
+			</div>
+		</div>
+	<% end %>
+</div>

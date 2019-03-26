@@ -1,0 +1,32 @@
+de:
+  general:
+    title: "Tagebuch"
+    today: "Heute"
+    mood: "Stimmung"
+    note: "Notiz"
+    edit: "Bearbeiten"
+    stop_edit: "Bearbeiten beenden"
+    cancel: "Abbrechen"
+    save: "Speichern"
+    submit: "Weiter"
+    remember: "Anmeldedaten speichern"
+    wrongPassword: "Fehler: ungültiges Passwort"
+    wrongCookiePassword: "Error: ungültiges Passwort im Browser gespeichert"
+    error: "fehlende oder fehlerhafte Parameter"
+    enterPassword: "Deine Daten sind verschlüsselt. Gib dein Passwort ein, um sie zu entschlüsseln!"
+  footer:
+    about: "Über OwnYourData.eu"
+    mobile: "Mobiler Datentresor"
+    feedback: "Feedback senden"
+    info: "Infos für App-Entwickler"
+    security: "Datensicherheit"
+    impressum: "Impressum"
+    language: "Sprache"
+  dialog:
+    newEntry: "Neuer Eintrag"
+    dateLbl: "Datum"
+  date:
+    day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
+    month_names: [~, Jänner, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
+    formats:
+      long: '%A, %-d. %B %Y'
