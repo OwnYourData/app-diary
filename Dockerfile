@@ -8,7 +8,7 @@ RUN echo "deb http://deb.debian.org/debian stretch-backports main" >> /etc/apt/s
 	apt-get update && \
 	apt-get install -y --no-install-recommends \
 		build-essential \
-		libsodium-dev=1.0.16-2~bpo9+1 \
+		libsodium-dev \
 		nodejs && \
 	rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 

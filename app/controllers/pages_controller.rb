@@ -81,9 +81,7 @@ class PagesController < ApplicationController
 		end
 
 		password = ""
-		if nonce == ""
-			password = params[:password].to_s
-		else
+		if nonce != ""
 			begin
 				# get cipher
 		        nonce_url = pia_url + '/api/support/' + nonce
@@ -107,9 +105,12 @@ class PagesController < ApplicationController
 
 		        end
 		    rescue
-		    	password = ""
+		    	
 		    end
 	    end
+		if params[:password].to_s != ""
+			password = params[:password].to_s
+		end
 		cookie_password = false
 		if password.to_s == ""
 			password = session[:password].to_s
